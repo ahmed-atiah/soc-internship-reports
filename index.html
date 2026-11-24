@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ahmed Atiah | 6-Week SOC Analyst Internship Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-primary: #050914;
+      --bg-secondary: #0b1222;
+      --bg-card: rgba(13, 22, 41, 0.78);
+      --bg-card-hover: rgba(19, 32, 59, 0.95);
+      --border-subtle: rgba(148, 163, 184, 0.14);
+      --border-accent: rgba(56, 189, 248, 0.42);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --cyan: #38bdf8;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --violet: #a78bfa;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --ease: 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.65;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient Cyber Mesh + Grid */
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 14% 10%, rgba(56, 189, 248, 0.13), transparent 42%),
+        radial-gradient(circle at 86% 16%, rgba(16, 185, 129, 0.10), transparent 40%),
+        radial-gradient(circle at 50% 85%, rgba(167, 139, 250, 0.06), transparent 45%),
+        linear-gradient(to right, rgba(56, 189, 248, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(56, 189, 248, 0.035) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+    }
+
+    .top-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      z-index: 120;
+      background: linear-gradient(90deg, var(--cyan), var(--emerald));
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
+      transition: width 0.08s linear;
+    }
+
+    code, pre, .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .container {
+      width: min(1220px, 92%);
+      margin-inline: auto;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 70;
+      background: rgba(5, 9, 20, 0.84);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--cyan), var(--emerald));
+      color: #03101d;
+      font-weight: 800;
+      font-size: 0.95rem;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 24px rgba(56, 189, 248, 0.25);
+    }
+
+    .brand-name {
+      font-weight: 700;
+      font-size: 0.98rem;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      position: relative;
+      padding: 4px 0;
+      transition: color var(--ease);
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--emerald));
+      transition: width var(--ease);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text-primary);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all var(--ease);
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cyan), #0284c7);
+      border-color: transparent;
+      color: #03101d;
+      font-weight: 700;
+      box-shadow: 0 8px 24px -6px rgba(56, 189, 248, 0.45);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.08);
+      border-color: transparent;
+    }
+
+    .btn-sm {
+      padding: 7px 11px;
+      font-size: 0.78rem;
+      border-radius: 7px;
+    }
+
+    /* About & Internship Purpose Hero */
+    .about-hero {
+      padding: 60px 0 38px;
+      display: grid;
+      grid-template-columns: 1.4fr 0.95fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .about-main {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      box-shadow: 0 18px 42px -18px rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-main::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(420px circle at var(--gx, 20%) var(--gy, 15%), rgba(56, 189, 248, 0.11), transparent 60%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.11);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      color: var(--cyan);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin-bottom: 16px;
+    }
+
+    .about-main h1 {
+      font-size: clamp(1.85rem, 3.6vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+      margin-bottom: 14px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(95deg, var(--cyan), var(--emerald));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .about-bio {
+      color: var(--text-primary);
+      font-size: 0.98rem;
+      margin-bottom: 14px;
+    }
+
+    .about-purpose {
+      color: var(--text-secondary);
+      font-size: 0.94rem;
+      padding: 14px 16px;
+      border-left: 3px solid var(--emerald);
+      background: rgba(16, 185, 129, 0.06);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-bottom: 22px;
+    }
+
+    .about-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Internship Snapshot Side Card */
+    .snapshot-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: 0 18px 42px -18px rgba(0, 0, 0, 0.7);
+    }
+
+    .snapshot-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .snapshot-head h2 {
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    .snapshot-pill {
+      font-size: 0.72rem;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.14);
+      color: #6ee7b7;
+      font-weight: 700;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .kpi-box {
+      background: rgba(5, 9, 20, 0.65);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      transition: border-color var(--ease);
+    }
+
+    .kpi-box:hover {
+      border-color: var(--border-accent);
+    }
+
+    .kpi-val {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.15;
+    }
+
+    .kpi-lbl {
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .snapshot-note {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      background: rgba(56, 189, 248, 0.06);
+      border: 1px solid rgba(56, 189, 248, 0.16);
+      padding: 12px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Interactive 6-Week Journey Strip */
+    .section {
+      padding: 36px 0 48px;
+    }
+
+    .section-head {
+      margin-bottom: 22px;
+    }
+
+    .kicker {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--cyan);
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.45rem, 2.6vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .section-head p {
+      color: var(--text-secondary);
+      font-size: 0.94rem;
+      max-width: 780px;
+    }
+
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .roadmap-step {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      text-align: left;
+      color: var(--text-primary);
+      font-family: inherit;
+      cursor: pointer;
+      transition: all var(--ease);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .roadmap-step:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+
+    .roadmap-step.is-selected {
+      border-color: var(--cyan);
+      background: rgba(56, 189, 248, 0.13);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.25);
+    }
+
+    .step-wk {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--cyan);
+    }
+
+    .step-topic {
+      font-size: 0.8rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .step-sub {
+      font-size: 0.71rem;
+      color: var(--text-secondary);
+    }
+
+    /* Filter & Live Progress Bar */
+    .tasks-toolbar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 15px 16px;
+      margin-bottom: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .toolbar-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .week-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .week-tab {
+      padding: 7px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      background: rgba(148, 163, 184, 0.06);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.81rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--ease);
+    }
+
+    .week-tab:hover {
+      color: var(--text-primary);
+      background: rgba(148, 163, 184, 0.12);
+    }
+
+    .week-tab.active {
+      background: rgba(56, 189, 248, 0.16);
+      border-color: var(--border-accent);
+      color: var(--cyan);
+    }
+
+    .search-box {
+      min-width: 260px;
+      flex: 0 1 330px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 9px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color var(--ease);
+    }
+
+    .search-input:focus {
+      border-color: var(--cyan);
+    }
+
+    .filter-status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      padding-top: 8px;
+      border-top: 1px solid rgba(148, 163, 184, 0.09);
+    }
+
+    .meter-track {
+      width: 170px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.15);
+      overflow: hidden;
+    }
+
+    .meter-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--emerald));
+      transition: width 0.28s ease;
+    }
+
+    /* Tasks Grid (Preserved Report & PDF Card Layout) */
+    .tasks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .task-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      transition: all var(--ease);
+    }
+
+    .task-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+
+    .task-card.capstone {
+      border-color: rgba(245, 158, 11, 0.55);
+      background: linear-gradient(175deg, rgba(245, 158, 11, 0.09), var(--bg-card) 42%);
+    }
+
+    .task-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .b-task {
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.14);
+      color: var(--cyan);
+    }
+
+    .b-week {
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: rgba(148, 163, 184, 0.1);
+      color: var(--text-secondary);
+    }
+
+    .b-cap {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: rgba(245, 158, 11, 0.18);
+      color: #fcd34d;
+    }
+
+    .task-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .task-desc {
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+    }
+
+    .pdf-box {
+      background: rgba(5, 9, 20, 0.82);
+      border: 1px dashed rgba(56, 189, 248, 0.3);
+      border-radius: var(--radius-md);
+      padding: 11px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .pdf-filename {
+      font-size: 0.75rem;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .pdf-actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* Connect Section */
+    .connect-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .connect-card h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .connect-card p {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+    }
+
+    .connect-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 24px 0;
+      margin-top: 20px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.84rem;
+    }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 140;
+      background: rgba(2, 6, 15, 0.84);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      width: min(960px, 96vw);
+      height: min(86vh, 780px);
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.78);
+    }
+
+    .modal-box.detail-box {
+      width: min(640px, 95vw);
+      height: auto;
+      max-height: 85vh;
+    }
+
+    .modal-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .modal-header h3 {
+      font-size: 0.96rem;
+      font-weight: 700;
+    }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .modal-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #04070f;
+    }
+
+    .detail-content {
+      padding: 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .detail-list {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .detail-list li::before {
+      content: "▹ ";
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    .chip {
+      font-size: 0.73rem;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      color: #bae6fd;
+      display: inline-block;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      z-index: 160;
+      background: #0f172a;
+      border: 1px solid var(--emerald);
+      color: #ecfdf5;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      transform: translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s ease;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 1060px) {
+      .about-hero { grid-template-columns: 1fr; }
+      .roadmap-grid { grid-template-columns: repeat(3, 1fr); }
+      .tasks-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .roadmap-grid { grid-template-columns: repeat(2, 1fr); }
+      .tasks-grid { grid-template-columns: 1fr; }
+      .search-box { min-width: 100%; flex: 1 1 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ambient-bg" aria-hidden="true"></div>
+  <div class="top-progress" id="topProgress"></div>
+
+  <header class="site-header">
+    <div class="container nav-inner">
+      <a href="#about" class="brand">
+        <span class="brand-badge">AA</span>
+        <span>
+          <div class="brand-name">Ahmed Atiah</div>
+          <div class="brand-sub">SOC Analyst Internship Archive</div>
+        </span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main Navigation">
+        <a href="#about">About Me</a>
+        <a href="#tasks">Internship Tasks (18)</a>
+        <a href="#connect">Connect</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="https://github.com/ahmed-atiah" target="_blank" rel="noopener" class="btn btn-sm">GitHub</a>
+        <a href="https://www.linkedin.com/in/ahmed-atiah" target="_blank" rel="noopener" class="btn btn-primary btn-sm">LinkedIn</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- About Me & Internship Purpose -->
+    <section class="container about-hero" id="about">
+      <div class="about-main" id="aboutCard">
+        <span class="eyebrow">SOC ANALYST INTERNSHIP &bull; 6-WEEK LOGBOOK</span>
+        <h1>
+          About Me &mdash;
+          <span class="gradient-text">Ahmed Atiah</span>
+        </h1>
+        <p class="about-bio">
+          I am <strong>Ahmed Atiah</strong>, a Computer Engineering graduate and SOC Analyst Intern based
+          between <strong>Istanbul, Turkey</strong> and <strong>Dammam, Saudi Arabia</strong>.
+        </p>
+        <p class="about-purpose">
+          This repository and web archive were created to document my complete 6-week SOC Analyst
+          Internship journey&mdash;covering every hands-on lab, detection exercise, investigation workflow,
+          and PDF report I completed&mdash;while serving as a practical study reference for learners and
+          aspiring analysts breaking into cybersecurity and Security Operations.
+        </p>
+
+        <div class="about-actions">
+          <a href="#tasks" class="btn btn-primary">Browse All 18 Reports</a>
+          <a href="https://github.com/ahmed-atiah/soc-internship-reports" target="_blank" rel="noopener" class="btn">
+            GitHub Repository &nearr;
+          </a>
+          <button type="button" id="copyEmailHero" class="btn">Copy Email</button>
+        </div>
+      </div>
+
+      <aside class="snapshot-card" aria-label="Internship Summary">
+        <div>
+          <div class="snapshot-head">
+            <h2>Internship Track Overview</h2>
+            <span class="snapshot-pill mono">COMPLETED</span>
+          </div>
+
+          <div class="kpi-grid" style="margin-top:14px;">
+            <div class="kpi-box">
+              <div class="kpi-val mono">6 Weeks</div>
+              <div class="kpi-lbl">Structured SOC Training</div>
+            </div>
+            <div class="kpi-box">
+              <div class="kpi-val mono">18 Tasks</div>
+              <div class="kpi-lbl">Documented PDF Reports</div>
+            </div>
+            <div class="kpi-box">
+              <div class="kpi-val mono">SIEM &amp; IR</div>
+              <div class="kpi-lbl">Splunk, Wazuh, Logs &amp; NIST</div>
+            </div>
+            <div class="kpi-box">
+              <div class="kpi-val mono">MITRE</div>
+              <div class="kpi-lbl">IOCs, Phishing &amp; PCAPs</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="snapshot-note">
+          Tip: Click any week card below to jump directly to that week's tasks, or press
+          <span class="mono">/</span> to search across all 18 reports.
+        </div>
+      </aside>
+    </section>
+
+    <!-- 6-Week Interactive Roadmap + 18 Task Reports -->
+    <section class="container section" id="tasks">
+      <div class="section-head">
+        <span class="kicker">6-Week Practical Curriculum</span>
+        <h2>SOC Analyst Internship Tasks &amp; Reports</h2>
+        <p>
+          Explore all 18 tasks completed across 6 weeks. Preview each PDF report inline, inspect task
+          steps, download the report, or open it directly in GitHub.
+        </p>
+      </div>
+
+      <!-- Interactive Week Roadmap -->
+      <div class="roadmap-grid" id="roadmapGrid">
+        <button type="button" class="roadmap-step" data-jump-week="1">
+          <span class="step-wk mono">WEEK 1 &bull; TASKS 1–3</span>
+          <span class="step-topic">SOC &amp; Lab Setup</span>
+          <span class="step-sub">CIA, SOC tiers, OSI/DNS, VMs</span>
+        </button>
+        <button type="button" class="roadmap-step" data-jump-week="2">
+          <span class="step-wk mono">WEEK 2 &bull; TASKS 4–6</span>
+          <span class="step-topic">Linux, Windows &amp; Logs</span>
+          <span class="step-sub">/var/log, Event IDs, Baselines</span>
+        </button>
+        <button type="button" class="roadmap-step" data-jump-week="3">
+          <span class="step-wk mono">WEEK 3 &bull; TASKS 7–9</span>
+          <span class="step-topic">Threats, MITRE &amp; PCAP</span>
+          <span class="step-sub">Malware, Kill Chain, Wireshark</span>
+        </button>
+        <button type="button" class="roadmap-step" data-jump-week="4">
+          <span class="step-wk mono">WEEK 4 &bull; TASKS 10–12</span>
+          <span class="step-topic">SIEM Operations</span>
+          <span class="step-sub">Splunk/Wazuh, SPL, Alerts</span>
+        </button>
+        <button type="button" class="roadmap-step" data-jump-week="5">
+          <span class="step-wk mono">WEEK 5 &bull; TASKS 13–15</span>
+          <span class="step-topic">Phishing, CTI &amp; Hunting</span>
+          <span class="step-sub">Headers, IOCs, 4625 Spike</span>
+        </button>
+        <button type="button" class="roadmap-step" data-jump-week="6">
+          <span class="step-wk mono">WEEK 6 &bull; TASKS 16–18</span>
+          <span class="step-topic">IR, Triage &amp; Capstone</span>
+          <span class="step-sub">NIST, LetsDefend, Full Report</span>
+        </button>
+      </div>
+
+      <!-- Filter & Search Bar -->
+      <div class="tasks-toolbar">
+        <div class="toolbar-top">
+          <div class="week-tabs" id="weekTabs">
+            <button type="button" class="week-tab active" data-week="all">All Weeks (18)</button>
+            <button type="button" class="week-tab" data-week="1">Week 1</button>
+            <button type="button" class="week-tab" data-week="2">Week 2</button>
+            <button type="button" class="week-tab" data-week="3">Week 3</button>
+            <button type="button" class="week-tab" data-week="4">Week 4</button>
+            <button type="button" class="week-tab" data-week="5">Week 5</button>
+            <button type="button" class="week-tab" data-week="6">Week 6</button>
+          </div>
+
+          <div class="search-box">
+            <input
+              type="search"
+              id="taskSearch"
+              class="search-input"
+              placeholder="Search task title, tool, Event ID, or topic..."
+              aria-label="Search internship tasks"
+            />
+          </div>
+        </div>
+
+        <div class="filter-status-bar">
+          <span id="filterCounter" class="mono">Showing 18 of 18 internship reports</span>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <button type="button" id="resetFiltersBtn" class="btn btn-sm" style="padding:4px 9px; font-size:0.74rem;">
+              Reset Filter
+            </button>
+            <div class="meter-track" aria-hidden="true">
+              <div class="meter-fill" id="meterFill"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 18 Tasks Grid -->
+      <div class="tasks-grid" id="tasksGrid"></div>
+    </section>
+
+    <!-- Connect Section -->
+    <section class="container section" id="connect">
+      <div class="connect-card">
+        <div>
+          <h3>Connect With Me</h3>
+          <p>
+            Questions about the internship reports, SOC labs, or opportunities &mdash; reach out via
+            LinkedIn, GitHub, or email (<span class="mono">ahmed02atiah@gmail.com</span>).
+          </p>
+        </div>
+        <div class="connect-links">
+          <a href="https://www.linkedin.com/in/ahmed-atiah" target="_blank" rel="noopener" class="btn btn-primary">
+            LinkedIn &nearr;
+          </a>
+          <a href="https://github.com/ahmed-atiah" target="_blank" rel="noopener" class="btn">
+            GitHub Profile &nearr;
+          </a>
+          <a href="https://github.com/ahmed-atiah/soc-internship-reports" target="_blank" rel="noopener" class="btn">
+            Reports Repo &nearr;
+          </a>
+          <button type="button" id="copyEmailConnect" class="btn">Copy Email</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      &copy; 2026 Ahmed Atiah &bull; SOC Analyst Internship Archive &bull; Istanbul, Turkey &bull; Dammam, Saudi Arabia
+    </div>
+  </footer>
+
+  <!-- PDF Preview Modal -->
+  <div class="modal-backdrop" id="pdfModal" aria-hidden="true">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="pdfModalTitle">PDF Report Preview</h3>
+        <div style="display:flex; gap:8px;">
+          <a id="pdfRawLink" href="#" target="_blank" rel="noopener" class="btn btn-sm">Open Raw PDF &nearr;</a>
+          <button type="button" id="closePdfModal" class="btn btn-sm">Close &times;</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <iframe id="pdfFrame" src="" title="PDF Report Preview"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Task Details Modal -->
+  <div class="modal-backdrop" id="detailModal" aria-hidden="true">
+    <div class="modal-box detail-box">
+      <div class="modal-header">
+        <h3 id="detailModalTitle">Task Breakdown</h3>
+        <button type="button" id="closeDetailModal" class="btn btn-sm">Close &times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="detail-content" id="detailContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copied ahmed02atiah@gmail.com to clipboard</div>
+
+  <script>
+    (() => {
+      const EMAIL = "ahmed02atiah@gmail.com";
+      const REPO_URL = "https://github.com/ahmed-atiah/soc-internship-reports";
+      const RAW_URL = "https://raw.githubusercontent.com/ahmed-atiah/soc-internship-reports/main";
+
+      const SOC_TASKS = [
+        {
+          task: 1, week: 1, file: "Task1_Report.pdf",
+          title: "Week 1 · Task 1 — Cyber Security Intro + What is a SOC?",
+          summary: "CIA Triad, threat vs. vulnerability vs. risk, 24/7 SOC operations, L1/L2/L3 roles, and Blue vs. Red team.",
+          steps: [
+            "Defined the CIA Triad and distinguished Threat, Vulnerability, and Risk.",
+            "Documented the purpose of a 24/7 Security Operations Center (SOC).",
+            "Built a responsibility matrix comparing L1, L2, and L3 SOC Analysts.",
+            "Contrasted defensive Blue Team and offensive Red Team operations."
+          ],
+          tools: ["CIA Triad", "SOC L1/L2/L3", "Blue vs. Red Team", "TryHackMe"]
+        },
+        {
+          task: 2, week: 1, file: "Task2_Report.pdf",
+          title: "Week 1 · Task 2 — Networking Basics for Defenders",
+          summary: "7-layer OSI model, common ports (22, 80, 443, 53, 445, 3389), DNS resolution flow, and traffic anomalies.",
+          steps: [
+            "Mapped all 7 OSI layers with key network protocols.",
+            "Compiled a defender reference table of 10 common ports (22, 80, 443, 53, 445, 3389).",
+            "Traced end-to-end DNS resolution flow and contrasted normal vs. suspicious traffic."
+          ],
+          tools: ["OSI 7 Layers", "Ports & Protocols", "DNS Resolution", "TryHackMe"]
+        },
+        {
+          task: 3, week: 1, file: "Task3_Report.pdf",
+          title: "Week 1 · Task 3 — Lab Setup — VirtualBox + Kali/Ubuntu + Windows VM",
+          summary: "Built an isolated VirtualBox SOC lab connecting Linux and Windows evaluation VMs on an internal network.",
+          steps: [
+            "Installed VirtualBox and provisioned Kali/Ubuntu Linux and Windows 10/11 VMs.",
+            "Configured internal networking and verified bidirectional host connectivity."
+          ],
+          tools: ["VirtualBox", "Kali / Ubuntu Linux", "Windows VM", "Internal Network"]
+        },
+        {
+          task: 4, week: 2, file: "Task4_Report.pdf",
+          title: "Week 2 · Task 4 — Linux Basics + Log Files (/var/log)",
+          summary: "CLI log navigation, inspecting auth.log and syslog in /var/log, grep failed logins, and tail -f monitoring.",
+          steps: [
+            "Practiced CLI inspection commands (ls, cd, cat, less, tail, grep).",
+            "Audited /var/log/auth.log and syslog to isolate failed authentication attempts.",
+            "Monitored live authentication events in real time using tail -f."
+          ],
+          tools: ["/var/log/auth.log", "syslog", "grep", "tail -f"]
+        },
+        {
+          task: 5, week: 2, file: "Task5_Report.pdf",
+          title: "Week 2 · Task 5 — Windows Logs & Event Viewer (Event IDs)",
+          summary: "Event Viewer analysis covering Event IDs 4624, 4625, 4688, and 4720, plus deep inspection of a 4625 event.",
+          steps: [
+            "Navigated Windows Event Viewer Security, System, and Application channels.",
+            "Documented 5 critical Windows Event IDs (4624, 4625, 4688, 4720, etc.).",
+            "Analyzed logon type, failure reason, and source details of an Event ID 4625 record."
+          ],
+          tools: ["Event Viewer", "Event ID 4624 / 4625", "Event ID 4688 / 4720"]
+        },
+        {
+          task: 6, week: 2, file: "Task6_Report.pdf",
+          title: "Week 2 · Task 6 — Understanding Logs & Log Analysis Basics",
+          summary: "Five log sources, Apache web server log breakdown, normal vs. suspicious entries, and baselining.",
+          steps: [
+            "Categorized 5 enterprise log types and their originating systems.",
+            "Parsed an Apache access log line into IP, timestamp, HTTP request, and status code.",
+            "Established baseline principles to distinguish benign vs. anomalous log patterns."
+          ],
+          tools: ["Apache Logs", "Log Formats", "Baselining", "TryHackMe"]
+        },
+        {
+          task: 7, week: 3, file: "Task7_Report.pdf",
+          title: "Week 3 · Task 7 — Malware Types & Common Attacks",
+          summary: "Six malware families and mechanisms/detection indicators for phishing, DoS/DDoS, MITM, and brute force.",
+          steps: [
+            "Defined Virus, Worm, Trojan, Ransomware, Spyware, and Rootkit behaviors.",
+            "Analyzed attack mechanics and mapped concrete SIEM/log detection signs for each threat."
+          ],
+          tools: ["Malware Types", "Brute Force & Phishing", "Detection Indicators"]
+        },
+        {
+          task: 8, week: 3, file: "Task8_Report.pdf",
+          title: "Week 3 · Task 8 — Cyber Kill Chain + MITRE ATT&CK Intro",
+          summary: "Seven Cyber Kill Chain stages, MITRE ATT&CK tactics/techniques (e.g., T1110 Brute Force), and attack mapping.",
+          steps: [
+            "Outlined all 7 stages of the Lockheed Martin Cyber Kill Chain.",
+            "Explored MITRE ATT&CK Enterprise tactics and analyzed technique T1110 (Brute Force).",
+            "Mapped an end-to-end attack scenario across Kill Chain phases."
+          ],
+          tools: ["Cyber Kill Chain", "MITRE ATT&CK", "T1110 Brute Force"]
+        },
+        {
+          task: 9, week: 3, file: "Task9_Report.pdf",
+          title: "Week 3 · Task 9 — Network Traffic Analysis — Wireshark Basics",
+          summary: "Packet capture and protocol inspection in Wireshark using http, dns, and ip.addr display filters.",
+          steps: [
+            "Captured live lab network traffic in Wireshark.",
+            "Applied display filters (http, dns, ip.addr) and inspected HTTP payload details."
+          ],
+          tools: ["Wireshark", "Display Filters", "Packet Inspection"]
+        },
+        {
+          task: 10, week: 4, file: "Task10_Report.pdf",
+          title: "Week 4 · Task 10 — What is SIEM? + Install Splunk / Wazuh",
+          summary: "SIEM architecture and benefits, lab deployment of Splunk Free / Wazuh, and dashboard verification.",
+          steps: [
+            "Documented core SIEM functions (log collection, correlation, alerting) and 3 benefits.",
+            "Installed and configured the SIEM platform in a lab VM and verified dashboard access."
+          ],
+          tools: ["SIEM Concepts", "Splunk Free", "Wazuh", "TryHackMe"]
+        },
+        {
+          task: 11, week: 4, file: "Task11_Report.pdf",
+          title: "Week 4 · Task 11 — Ingest Logs into SIEM + Basic Searches",
+          summary: "Ingested host/sample logs into SIEM, ran SPL/Wazuh queries, counted failed logons, and filtered time ranges.",
+          steps: [
+            "Ingested Windows/Linux telemetry into the SIEM instance.",
+            "Executed search queries to filter and count failed authentication events over time ranges."
+          ],
+          tools: ["Log Ingestion", "Splunk SPL", "Wazuh Search"]
+        },
+        {
+          task: 12, week: 4, file: "Task12_Report.pdf",
+          title: "Week 4 · Task 12 — SIEM Dashboards & Alerts",
+          summary: "Converted searches into dashboard panels, configured a threshold alert (>5 failed logins), and verified triggers.",
+          steps: [
+            "Built multi-panel SIEM visualizations tracking authentication trends.",
+            "Configured an alert rule for brute-force thresholds and validated trigger firing."
+          ],
+          tools: ["SIEM Dashboards", "Alert Rules", "Anomaly Monitoring"]
+        },
+        {
+          task: 13, week: 5, file: "Task13_Report.pdf",
+          title: "Week 5 · Task 13 — Phishing Email Analysis",
+          summary: "Email header forensics (From, Return-Path, SPF/DKIM), safe VirusTotal URL checks, and phishing verdict.",
+          steps: [
+            "Examined full email headers including From, Return-Path, and SPF/DKIM alignment.",
+            "Safely checked suspicious URLs on VirusTotal and documented red flags and verdict."
+          ],
+          tools: ["Email Headers", "SPF / DKIM", "VirusTotal", "Phishing Triage"]
+        },
+        {
+          task: 14, week: 5, file: "Task14_report.pdf",
+          title: "Week 5 · Task 14 — Threat Intelligence & IOCs",
+          summary: "IOC classification (IP, domain, URL, file hash), AbuseIPDB reputation lookup, and VirusTotal hash investigation.",
+          steps: [
+            "Categorized primary IOC types (IP, domain, URL, file hash).",
+            "Checked suspicious IPs on AbuseIPDB and file hashes on VirusTotal to assess threat level."
+          ],
+          tools: ["IOCs", "AbuseIPDB", "VirusTotal", "Threat Intel"]
+        },
+        {
+          task: 15, week: 5, file: "Task15_Report.pdf",
+          title: "Week 5 · Task 15 — Incident Detection — Investigate an Attack in Logs",
+          summary: "Detected a spike in Event ID 4625, identified source IP and attempt count, checked 4624 success, and built a timeline.",
+          steps: [
+            "Isolated a spike of failed logins (Event ID 4625) in logs/SIEM.",
+            "Identified source IP, counted attempts, checked Event ID 4624 success, and built an attack timeline."
+          ],
+          tools: ["Event ID 4625", "Event ID 4624", "Attack Timeline"]
+        },
+        {
+          task: 16, week: 6, file: "Task16_Report.pdf",
+          title: "Week 6 · Task 16 — Incident Response Process (NIST Phases)",
+          summary: "Six NIST IR phases, short- vs. long-term containment, malware walkthrough, and L1-to-L2 escalation.",
+          steps: [
+            "Mapped all 6 NIST Incident Response phases with concise descriptions.",
+            "Applied short- and long-term containment to a malware scenario and noted L1-to-L2 escalation."
+          ],
+          tools: ["NIST IR Lifecycle", "Containment", "L1 -> L2 Escalation"]
+        },
+        {
+          task: 17, week: 6, file: "Task17_Report.pdf",
+          title: "Week 6 · Task 17 — Hands-on Investigation (LetsDefend / CyberDefenders)",
+          summary: "Solved a live blue-team SOC alert on LetsDefend / CyberDefenders with log/IOC correlation and final verdict.",
+          steps: [
+            "Investigated a beginner alert/case on LetsDefend or CyberDefenders.",
+            "Analyzed logs, IOCs, and timeline to determine True Positive vs. False Positive."
+          ],
+          tools: ["LetsDefend", "CyberDefenders", "Alert Triage"]
+        },
+        {
+          task: 18, week: 6, file: "Task18_Report.pdf",
+          title: "Week 6 · Task 18 — CAPSTONE — Full Incident Investigation + Report",
+          summary: "Comprehensive Capstone Incident Report: executive summary, timeline, forensic evidence, MITRE mapping, and remediation.",
+          steps: [
+            "Investigated an end-to-end incident scenario across detection, logs, IOCs, and MITRE ATT&CK.",
+            "Authored a structured Capstone Incident Report with timeline, root cause, impact, and recommendations."
+          ],
+          tools: ["Capstone Report", "MITRE ATT&CK", "Incident Investigation"],
+          capstone: true
+        }
+      ];
+
+      const weekTabs = document.getElementById("weekTabs");
+      const roadmapGrid = document.getElementById("roadmapGrid");
+      const taskSearch = document.getElementById("taskSearch");
+      const tasksGrid = document.getElementById("tasksGrid");
+      const filterCounter = document.getElementById("filterCounter");
+      const meterFill = document.getElementById("meterFill");
+      const resetFiltersBtn = document.getElementById("resetFiltersBtn");
+      const topProgress = document.getElementById("topProgress");
+
+      const pdfModal = document.getElementById("pdfModal");
+      const pdfModalTitle = document.getElementById("pdfModalTitle");
+      const pdfRawLink = document.getElementById("pdfRawLink");
+      const pdfFrame = document.getElementById("pdfFrame");
+      const closePdfModal = document.getElementById("closePdfModal");
+
+      const detailModal = document.getElementById("detailModal");
+      const detailModalTitle = document.getElementById("detailModalTitle");
+      const detailContent = document.getElementById("detailContent");
+      const closeDetailModal = document.getElementById("closeDetailModal");
+      const toast = document.getElementById("toast");
+
+      let activeWeek = "all";
+      let searchQuery = "";
+
+      function escapeHtml(val) {
+        return String(val)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function syncActiveWeekUI() {
+        weekTabs.querySelectorAll(".week-tab").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.week === activeWeek);
+        });
+        roadmapGrid.querySelectorAll(".roadmap-step").forEach((step) => {
+          step.classList.toggle("is-selected", step.dataset.jumpWeek === activeWeek);
+        });
+      }
+
+      function renderTasks() {
+        const q = searchQuery.trim().toLowerCase();
+
+        const filtered = SOC_TASKS.filter((item) => {
+          const okWeek = activeWeek === "all" || String(item.week) === activeWeek;
+          const okQuery =
+            !q ||
+            item.title.toLowerCase().includes(q) ||
+            item.summary.toLowerCase().includes(q) ||
+            item.file.toLowerCase().includes(q) ||
+            item.tools.some((t) => t.toLowerCase().includes(q)) ||
+            `task ${item.task}`.includes(q) ||
+            `week ${item.week}`.includes(q);
+          return okWeek && okQuery;
+        });
+
+        filterCounter.textContent = `Showing ${filtered.length} of ${SOC_TASKS.length} internship reports`;
+        meterFill.style.width = `${Math.round((filtered.length / SOC_TASKS.length) * 100)}%`;
+
+        if (!filtered.length) {
+          tasksGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:36px; background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); color:var(--text-secondary);">No internship tasks match your current filter.</div>`;
+          return;
+        }
+
+        tasksGrid.innerHTML = filtered
+          .map((item) => {
+            const rawFile = `${RAW_URL}/${item.file}`;
+            const blobFile = `${REPO_URL}/blob/main/${item.file}`;
+            const embedUrl = `https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(rawFile)}`;
+
+            return `
+              <article class="task-card ${item.capstone ? "capstone" : ""}">
+                <div>
+                  <div class="task-badges">
+                    <span class="b-task mono">Task ${item.task}</span>
+                    <span class="b-week">Week ${item.week}</span>
+                    ${item.capstone ? `<span class="b-cap">CAPSTONE</span>` : ""}
+                  </div>
+                  <h3 class="task-title">${escapeHtml(item.title)}</h3>
+                  <p class="task-desc">${escapeHtml(item.summary)}</p>
+                </div>
+
+                <div class="pdf-box">
+                  <div class="pdf-filename">
+                    <span class="mono">${escapeHtml(item.file)}</span>
+                  </div>
+                  <div class="pdf-actions">
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm"
+                      data-preview-title="${escapeHtml(item.title)}"
+                      data-preview-embed="${escapeHtml(embedUrl)}"
+                      data-preview-raw="${escapeHtml(rawFile)}"
+                    >
+                      Preview PDF
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm"
+                      data-detail-task="${item.task}"
+                    >
+                      Details
+                    </button>
+                    <a href="${rawFile}" download="${escapeHtml(item.file)}" class="btn btn-sm">
+                      Download
+                    </a>
+                    <a href="${blobFile}" target="_blank" rel="noopener" class="btn btn-sm">
+                      GitHub &nearr;
+                    </a>
+                  </div>
+                </div>
+              </article>
+            `;
+          })
+          .join("");
+      }
+
+      // Week Tabs & Roadmap Jump
+      weekTabs.addEventListener("click", (e) => {
+        const btn = e.target.closest(".week-tab");
+        if (!btn) return;
+        activeWeek = btn.dataset.week;
+        syncActiveWeekUI();
+        renderTasks();
+      });
+
+      roadmapGrid.addEventListener("click", (e) => {
+        const step = e.target.closest(".roadmap-step");
+        if (!step) return;
+        const targetWeek = step.dataset.jumpWeek;
+        activeWeek = activeWeek === targetWeek ? "all" : targetWeek;
+        syncActiveWeekUI();
+        renderTasks();
+        document.getElementById("weekTabs").scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+
+      taskSearch.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        renderTasks();
+      });
+
+      resetFiltersBtn.addEventListener("click", () => {
+        activeWeek = "all";
+        searchQuery = "";
+        taskSearch.value = "";
+        syncActiveWeekUI();
+        renderTasks();
+      });
+
+      // Modals
+      function openPdf(title, embedUrl, rawUrl) {
+        pdfModalTitle.textContent = title;
+        pdfFrame.src = embedUrl;
+        pdfRawLink.href = rawUrl;
+        pdfModal.classList.add("open");
+        pdfModal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closePdf() {
+        pdfModal.classList.remove("open");
+        pdfModal.setAttribute("aria-hidden", "true");
+        pdfFrame.src = "";
+        document.body.style.overflow = "";
+      }
+
+      function openDetails(taskNum) {
+        const item = SOC_TASKS.find((t) => t.task === Number(taskNum));
+        if (!item) return;
+
+        const rawFile = `${RAW_URL}/${item.file}`;
+        const embedUrl = `https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(rawFile)}`;
+
+        detailModalTitle.textContent = item.title;
+        detailContent.innerHTML = `
+          <p style="color:var(--text-secondary); font-size:0.92rem;">${escapeHtml(item.summary)}</p>
+          <div>
+            <div class="kicker" style="margin-bottom:8px;">What Was Practiced &amp; Documented</div>
+            <ul class="detail-list">
+              ${item.steps.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}
+            </ul>
+          </div>
+          <div>
+            <div class="kicker" style="margin-bottom:8px;">Focus Areas &amp; Tools</div>
+            <div style="display:flex; gap:7px; flex-wrap:wrap;">
+              ${item.tools.map((t) => `<span class="chip">${escapeHtml(t)}</span>`).join("")}
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; padding-top:10px; border-top:1px solid var(--border-subtle);">
+            <button type="button" class="btn btn-primary btn-sm" id="modalTriggerPdf">Preview PDF Report</button>
+            <a href="${rawFile}" download="${escapeHtml(item.file)}" class="btn btn-sm">Download ${escapeHtml(item.file)}</a>
+          </div>
+        `;
+
+        document.getElementById("modalTriggerPdf").addEventListener("click", () => {
+          closeDetails();
+          openPdf(item.title, embedUrl, rawFile);
+        });
+
+        detailModal.classList.add("open");
+        detailModal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeDetails() {
+        detailModal.classList.remove("open");
+        detailModal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      }
+
+      tasksGrid.addEventListener("click", (e) => {
+        const previewBtn = e.target.closest("[data-preview-embed]");
+        if (previewBtn) {
+          openPdf(
+            previewBtn.dataset.previewTitle,
+            previewBtn.dataset.previewEmbed,
+            previewBtn.dataset.previewRaw
+          );
+          return;
+        }
+
+        const detailBtn = e.target.closest("[data-detail-task]");
+        if (detailBtn) {
+          openDetails(detailBtn.dataset.detailTask);
+        }
+      });
+
+      closePdfModal.addEventListener("click", closePdf);
+      pdfModal.addEventListener("click", (e) => { if (e.target === pdfModal) closePdf(); });
+
+      closeDetailModal.addEventListener("click", closeDetails);
+      detailModal.addEventListener("click", (e) => { if (e.target === detailModal) closeDetails(); });
+
+      // Keyboard Shortcuts: '/' to search, 'Escape' to close modals
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "/" && document.activeElement !== taskSearch && !pdfModal.classList.contains("open") && !detailModal.classList.contains("open")) {
+          e.preventDefault();
+          taskSearch.focus();
+        } else if (e.key === "Escape") {
+          if (pdfModal.classList.contains("open")) closePdf();
+          if (detailModal.classList.contains("open")) closeDetails();
+        }
+      });
+
+      // Copy Email Toast
+      function copyEmail() {
+        navigator.clipboard.writeText(EMAIL).then(() => {
+          toast.classList.add("show");
+          setTimeout(() => toast.classList.remove("show"), 2400);
+        });
+      }
+
+      document.getElementById("copyEmailHero").addEventListener("click", copyEmail);
+      document.getElementById("copyEmailConnect").addEventListener("click", copyEmail);
+
+      // Ambient Glow Follow on About Card
+      const aboutCard = document.getElementById("aboutCard");
+      aboutCard.addEventListener("mousemove", (e) => {
+        const rect = aboutCard.getBoundingClientRect();
+        aboutCard.style.setProperty("--gx", `${e.clientX - rect.left}px`);
+        aboutCard.style.setProperty("--gy", `${e.clientY - rect.top}px`);
+      });
+
+      // Top Scroll Progress Bar
+      window.addEventListener("scroll", () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+        topProgress.style.width = `${pct}%`;
+      }, { passive: true });
+
+      renderTasks();
+    })();
+  </script>
+</body>
+</html>
